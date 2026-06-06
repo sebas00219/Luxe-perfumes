@@ -1,0 +1,854 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Luxe Perfumes</title>
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"/>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial,sans-serif;
+}
+
+body{
+    background:linear-gradient(135deg,#fff7f2,#ffe9dd);
+    color:#333;
+    overflow-x:hidden;
+}
+
+/* ================= LOADER PREMIUM ================= */
+
+#loader{
+    position:fixed;
+    inset:0;
+    background:linear-gradient(135deg,#d98f71,#b86f51);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    z-index:999999;
+    overflow:hidden;
+    transition:opacity .5s ease;
+}
+
+.loader-content{
+    text-align:center;
+    color:white;
+    animation:fadeIn 1s ease;
+}
+
+.loader-logo{
+    font-size:5rem;
+    animation:floatLogo 2s infinite ease-in-out;
+}
+
+.loader-content h1{
+    font-size:3rem;
+    margin-top:10px;
+}
+
+.loader-content p{
+    margin-top:10px;
+    opacity:.9;
+}
+
+.loader-bar{
+    width:280px;
+    height:10px;
+    background:rgba(255,255,255,.25);
+    border-radius:20px;
+    overflow:hidden;
+    margin-top:30px;
+}
+
+.loader-progress{
+    width:0%;
+    height:100%;
+    background:white;
+    animation:loadingBar 3s forwards;
+}
+
+@keyframes loadingBar{
+
+    0%{
+        width:0%;
+    }
+
+    100%{
+        width:100%;
+    }
+
+}
+
+@keyframes floatLogo{
+
+    0%{
+        transform:translateY(0px);
+    }
+
+    50%{
+        transform:translateY(-10px);
+    }
+
+    100%{
+        transform:translateY(0px);
+    }
+
+}
+
+@keyframes fadeIn{
+
+    from{
+        opacity:0;
+        transform:scale(.9);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1);
+    }
+
+}
+
+/* HEADER */
+
+header{
+    background:linear-gradient(135deg,#d98f71,#b86f51);
+    color:white;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+}
+
+/* NAVBAR */
+
+.navbar{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:20px 30px;
+    position:relative;
+}
+
+.logo{
+    font-size:1.7rem;
+    font-weight:bold;
+    color:white;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+    list-style:none;
+}
+
+.nav-links a{
+    text-decoration:none;
+    color:white;
+    font-weight:bold;
+    transition:.3s;
+}
+
+.nav-links a:hover{
+    opacity:.7;
+}
+
+.hamburger{
+    display:none;
+    flex-direction:column;
+    gap:5px;
+    cursor:pointer;
+}
+
+.hamburger span{
+    width:28px;
+    height:3px;
+    background:white;
+    border-radius:10px;
+}
+
+/* HERO */
+
+.hero{
+    padding:70px 20px;
+    text-align:center;
+}
+
+.hero h1{
+    font-size:3.2rem;
+}
+
+.hero p{
+    margin-top:15px;
+    font-size:1.2rem;
+    opacity:.9;
+}
+
+/* CARRITO */
+
+.cart{
+    position:fixed;
+    top:25px;
+    left:25px;
+    background:white;
+    padding:15px 20px;
+    border-radius:20px;
+    box-shadow:0 10px 25px rgba(0,0,0,.15);
+    z-index:999;
+    font-weight:bold;
+}
+
+/* PERFIL */
+
+.profile-btn{
+    position:fixed;
+    top:25px;
+    right:25px;
+    width:60px;
+    height:60px;
+    border:none;
+    border-radius:50%;
+    background:linear-gradient(135deg,#d98f71,#b86f51);
+    color:white;
+    font-size:1.3rem;
+    cursor:pointer;
+    box-shadow:0 10px 25px rgba(0,0,0,.2);
+    z-index:999;
+    transition:.3s;
+}
+
+.profile-btn:hover{
+    transform:scale(1.08);
+}
+
+/* PRODUCTOS */
+    
+<div class="search-container">
+<input
+type="text"
+id="searchInput"
+placeholder="🔍 Buscar perfume..."
+onkeyup="searchPerfumes()">
+</div>
+    
+
+<section class="products">
+
+.products{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:25px;
+    padding:50px 25px;
+    max-width:1300px;
+    margin:auto;
+}
+
+.card{
+    background:white;
+    border-radius:30px;
+    overflow:hidden;
+    position:relative;
+    transition:.4s;
+    box-shadow:0 15px 35px rgba(0,0,0,.08);
+}
+
+.card:hover{
+    transform:translateY(-10px);
+}
+
+.card img{
+    width:100%;
+    height:320px;
+    object-fit:cover;
+}
+
+.card-content{
+    padding:25px;
+    text-align:center;
+}
+
+.card h2{
+    margin-bottom:10px;
+}
+
+.card p{
+    color:#666;
+}
+
+.price{
+    font-size:1.4rem;
+    font-weight:bold;
+    color:#d98f71;
+    margin:15px 0;
+}
+
+.card button{
+    padding:14px 20px;
+    border:none;
+    border-radius:50px;
+    background:linear-gradient(135deg,#d98f71,#b86f51);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.card button:hover{
+    transform:scale(1.05);
+}
+
+/* PANEL ADMIN */
+
+.admin-panel{
+    display:none;
+    max-width:1200px;
+    margin:40px auto;
+    padding:30px;
+    background:white;
+    border-radius:25px;
+    box-shadow:0 15px 35px rgba(0,0,0,.1);
+}
+
+.admin-panel h2{
+    margin-bottom:20px;
+    color:#d98f71;
+}
+
+.admin-box{
+    padding:20px;
+    border-radius:20px;
+    background:#fff7f2;
+    margin-top:20px;
+}
+
+/* WHATSAPP */
+
+.whatsapp-btn{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    width:70px;
+    height:70px;
+    background:#25D366;
+    color:white;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:2rem;
+    text-decoration:none;
+    box-shadow:0 10px 25px rgba(0,0,0,.25);
+    z-index:999;
+    animation:floatWhatsapp 2s infinite ease-in-out;
+}
+
+@keyframes floatWhatsapp{
+    0%{
+        transform:translateY(0px);
+    }
+    50%{
+        transform:translateY(-6px);
+    }
+    100%{
+        transform:translateY(0px);
+    }
+}
+
+/* LOGIN */
+
+.auth-modal{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.5);
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:9999;
+}
+
+.auth-box{
+    background:white;
+    padding:35px;
+    width:90%;
+    max-width:400px;
+    border-radius:25px;
+    text-align:center;
+    box-shadow:0 20px 45px rgba(0,0,0,.2);
+}
+
+.auth-box h2{
+    margin-bottom:20px;
+    color:#d98f71;
+}
+
+.auth-box input{
+    width:100%;
+    padding:15px;
+    margin-bottom:15px;
+    border-radius:15px;
+    border:1px solid #ddd;
+    outline:none;
+}
+
+.auth-box button{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:15px;
+    background:linear-gradient(135deg,#d98f71,#b86f51);
+    color:white;
+    font-weight:bold;
+    cursor:pointer;
+    margin-top:10px;
+}
+
+#authMessage{
+    margin-top:15px;
+    color:#666;
+}
+
+/* FOOTER */
+
+footer{
+    text-align:center;
+    padding:40px;
+    color:#666;
+}
+
+/* MOBILE */
+
+@media(max-width:768px){
+
+    .hamburger{
+        display:flex;
+    }
+
+    .nav-links{
+        position:absolute;
+        top:80px;
+        right:20px;
+        background:white;
+        flex-direction:column;
+        width:220px;
+        padding:20px;
+        border-radius:20px;
+        display:none;
+        box-shadow:0 15px 35px rgba(0,0,0,.15);
+        z-index:999;
+    }
+
+    .nav-links a{
+        color:#333;
+    }
+
+    .nav-links.active{
+        display:flex;
+    }
+
+    .hero h1{
+        font-size:2.1rem;
+    }
+
+    .cart{
+        left:15px;
+        top:15px;
+    }
+
+    .profile-btn{
+        right:15px;
+        top:15px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- ================= LOADER PREMIUM ================= -->
+
+<div id="loader">
+
+    <div class="loader-content">
+
+        <div class="loader-logo">
+            ✨
+        </div>
+
+        <h1>Luxe Perfumes</h1>
+
+        <p>Cargando experiencia premium...</p>
+
+        <div class="loader-bar">
+            <div class="loader-progress"></div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- CARRITO -->
+
+<div class="cart">
+🛒 Carrito: <span id="cart-count">0</span>
+</div>
+
+<!-- PERFIL -->
+
+<button class="profile-btn" onclick="toggleAuth()">
+<i class="fa-solid fa-user"></i>
+</button>
+
+<!-- HEADER -->
+
+<header>
+
+<nav class="navbar">
+
+<div class="logo">
+Luxe Perfumes
+</div>
+
+<div class="hamburger" onclick="toggleMenu()">
+
+<span></span>
+<span></span>
+<span></span>
+
+</div>
+
+<ul class="nav-links" id="navLinks">
+
+<li><a href="#">Inicio</a></li>
+<li><a href="#">Perfumes</a></li>
+<li><a href="#">Ofertas</a></li>
+<li><a href="#">Contacto</a></li>
+
+</ul>
+
+</nav>
+
+<div class="hero">
+
+<h1>
+Encuentra tu aroma perfecto
+</h1>
+
+<p>
+Perfumes elegantes, exclusivos y modernos
+</p>
+
+</div>
+
+</header>
+
+<!-- PRODUCTOS -->
+
+<section class="products">
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=1200&auto=format&fit=crop">
+
+<div class="card-content">
+
+<h2>Perfume Floral</h2>
+
+<p>
+Aroma elegante y delicado.
+</p>
+
+<div class="price">
+$29.99
+</div>
+
+<button onclick="addToCart()">
+Agregar al carrito
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=1200&auto=format&fit=crop">
+
+<div class="card-content">
+
+<h2>Perfume Luxury</h2>
+
+<p>
+Fragancia premium intensa.
+</p>
+
+<div class="price">
+$49.99
+</div>
+
+<button onclick="addToCart()">
+Agregar al carrito
+</button>
+
+</div>
+
+</div>
+
+<div class="card">
+
+<img src="https://images.unsplash.com/photo-1615634260167-c8cdede054de?q=80&w=1200&auto=format&fit=crop">
+
+<div class="card-content">
+
+<h2>Perfume Gold</h2>
+
+<p>
+Notas sofisticadas y modernas.
+</p>
+
+<div class="price">
+$59.99
+</div>
+
+<button onclick="addToCart()">
+Agregar al carrito
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+<!-- PANEL ADMIN -->
+
+<section class="admin-panel" id="adminPanel">
+
+<h2>Panel Administrador 🔥</h2>
+
+<div class="admin-box">
+
+<p>
+Administrador conectado:
+<strong>
+sebas00219@gmail.com
+</strong>
+</p>
+
+<br>
+
+<p>
+Desde aquí podrás administrar:
+</p>
+
+<ul>
+<li>Usuarios</li>
+<li>Productos</li>
+<li>Pedidos</li>
+<li>Tienda</li>
+</ul>
+
+</div>
+
+</section>
+
+<footer>
+© 2026 Luxe Perfumes — Todos los derechos reservados
+</footer>
+
+<!-- WHATSAPP -->
+
+<a href="https://wa.me/573163297605?text=Hola%20quiero%20información%20sobre%20los%20perfumes"
+class="whatsapp-btn"
+target="_blank">
+
+<i class="fa-brands fa-whatsapp"></i>
+
+</a>
+
+<!-- LOGIN -->
+
+<div class="auth-modal" id="authModal">
+
+<div class="auth-box">
+
+<h2>Mi Cuenta</h2>
+
+<input type="email" id="username" placeholder="Correo electrónico">
+
+<input type="password" id="password" placeholder="Contraseña">
+
+<button onclick="registerUser()">
+Registrarse
+</button>
+
+<button onclick="loginUser()">
+Iniciar Sesión
+</button>
+
+<p id="authMessage"></p>
+
+</div>
+
+</div>
+
+<!-- SCRIPT GENERAL -->
+
+<script>
+
+/* ================= LOADER SCRIPT ================= */
+
+window.addEventListener('load', () => {
+
+setTimeout(() => {
+
+document.getElementById('loader').style.opacity = '0';
+
+setTimeout(() => {
+
+document.getElementById('loader').style.display = 'none';
+
+},500);
+
+},2500);
+
+});
+
+let cart = 0;
+
+function addToCart(){
+
+    cart++;
+
+    document.getElementById('cart-count').innerText = cart;
+}
+
+function toggleAuth(){
+
+    const modal = document.getElementById('authModal');
+
+    modal.style.display =
+    modal.style.display === 'flex'
+    ? 'none'
+    : 'flex';
+}
+
+function toggleMenu(){
+
+const nav =
+document.getElementById('navLinks');
+
+nav.classList.toggle('active');
+
+}
+
+</script>
+
+<!-- FIREBASE -->
+
+<script type="module">
+
+import { initializeApp }
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+
+import {
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword
+}
+from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBJUT4Q-hPI0CQ6YaDrn84DUVqpuGLkgkA",
+  authDomain: "luxe-perfumes-ba46a.firebaseapp.com",
+  projectId: "luxe-perfumes-ba46a",
+  storageBucket: "luxe-perfumes-ba46a.firebasestorage.app",
+  messagingSenderId: "339761105048",
+  appId: "1:339761105048:web:9216fbcd90590d680c68ed",
+  measurementId: "G-DCVQJ5CFZE"
+};
+
+const app = initializeApp(firebaseConfig);
+
+const auth = getAuth(app);
+
+const adminEmail = "sebas00219@gmail.com";
+
+window.registerUser = async function(){
+
+const username =
+document.getElementById('username').value;
+
+const password =
+document.getElementById('password').value;
+
+try{
+
+await createUserWithEmailAndPassword(
+auth,
+username,
+password
+);
+
+document.getElementById('authMessage').innerText =
+'Usuario registrado correctamente';
+
+}catch(error){
+
+document.getElementById('authMessage').innerText =
+error.message;
+
+}
+
+}
+
+window.loginUser = async function(){
+
+const username =
+document.getElementById('username').value;
+
+const password =
+document.getElementById('password').value;
+
+try{
+
+await signInWithEmailAndPassword(
+auth,
+username,
+password
+);
+
+document.getElementById('authMessage').innerText =
+'Inicio de sesión exitoso';
+
+if(username === adminEmail){
+
+    alert('Bienvenido Administrador 🔥');
+
+    document.getElementById('adminPanel').style.display =
+    'block';
+
+}else{
+
+    alert('Bienvenido Cliente ✨');
+
+}
+
+}catch(error){
+
+document.getElementById('authMessage').innerText =
+error.message;
+
+}
+
+}
+
+</script>
+
+</body>
+</html>
